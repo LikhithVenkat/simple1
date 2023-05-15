@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  </head>
+  <body ng-app="myApp">
+    <div>
+      <calculator-app></calculator-app>
+    </div>
+    <script>
+      var app = angular.module("myApp", []);
+      app.component("calculatorApp", {
+        template:
+        `<div class="content">
+          <center>
+        <h1>Calculator</h1>
+        <input type="number" ng-model="firstNumber" placeholder="Enter the firstnumber:"/>
+        <br><br>
+        <input type="number" ng-model="secondNumber" placeholder="Enter the secondnumber:"/> 
+        <br><br>
+        <button ng-click="add()">Add</button><br>
+        <button ng-click="sub()">Subtract</button><br>
+        <button ng-click="mul()">Multiply</button><br>
+        <button ng-click="div()">Divide</button><br>
+        <h1>Result: {{result}}</h1>
+        <center>
+        </div> `,
+        controller: function ($scope) {
+            console.log("hello");
+          $scope.add = function () {
+            $scope.result = $scope.firstNumber + $scope.secondNumber;
+          };
+          $scope.sub = function () {
+            $scope.result = $scope.firstNumber - $scope.secondNumber;
+          };
+          $scope.mul= function () {
+            $scope.result = $scope.firstNumber * $scope.secondNumber;
+          };
+          $scope.div = function () {
+            $scope.result = $scope.firstNumber / $scope.secondNumber;
+          };
+        },
+      });
+    </script>
+  </body>
+</html>

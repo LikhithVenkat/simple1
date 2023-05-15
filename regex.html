@@ -1,0 +1,64 @@
+<head>
+    <title>TravelBuddy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <script>
+    function login_validate(){
+    var Email=document.login_form.Email.value;
+    var Password=document.login_form.Password.value;
+    if(Email==null|| Email==""){
+    document.getElementById("emailerror").innerHTML="<p>&#10071 Email not entered</p>";
+    return false;
+    }
+    else if(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(Email)==false)
+    {
+    document.getElementById("emailerror").innerHTML="<p>&#10071 Email not valid</p>";
+    return false;
+    }
+    else{
+    document.getElementById("emailerror").innerHTML="<br><br>";
+    }
+    if(Password==null|| Password=="")
+    {
+    document.getElementById("passworderror").innerHTML="<p>&#10071 Password not entered</p>";
+    return false;
+    }
+    else{
+    document.getElementById("passworderror").innerHTML="<br><br>";
+    }
+    }
+    </script>
+    </head>
+    <body>
+        <div>
+        <div style="display: inline-block">
+        <h1><em>Travel Buddy</em></h1>
+        </div>
+        </div>
+        <div style="padding-bottom: 100px">
+        <table cellpadding="10px" cellspacing="10px">
+        <tr>
+        <th colspan="2">
+        <h1>Login</h1>
+        <br />
+        </th>
+        </tr>
+        </table>
+        <div style="height: 20%">
+        <form
+        action="hello.html"
+        name="login_form"
+        id="login_form"
+        onsubmit="return login_validate()"
+        method="post"
+        >
+        <input type="text" name="Email" placeholder="Enter Email ID" />
+        <div id="emailerror"><br /><br /></div>
+        <input type="password" name="Password" placeholder="Enter Password" />
+        <div id="passworderror"><br /><br /></div>
+        <input style="width: 45%" type="submit" />
+        <input style="width: 45%" type="reset" />
+        </form>
+        </div>
+        </div>
+        </body>

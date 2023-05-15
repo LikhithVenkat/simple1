@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <style>
+    .list-view {
+      display: block;
+      border: 1px solid #dddddd;
+      padding: 10px;
+    }
+    .grid-view {
+      display: inline-block;
+      border: 1px solid #dddddd;
+      width: 150px;
+      height: 150px;
+      margin: 10px;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 150px;
+    }
+    .fade-animation {
+      transition: all linear 0.5s;
+      overflow: hidden;
+      height: auto;
+      max-height: 1000px;
+      opacity: 1;
+    }
+  </style>
+</head>
+<body ng-controller="myCtrl">
+  <label>Choose Layout:</label>
+  <select ng-model="selectedLayout">
+    <option value="list">List View</option>
+    <option value="grid">Grid View</option>
+  </select>
+  <div ng-switch on="selectedLayout">
+    <div ng-switch-when="list" class="list-view" ng-hide="showGrid" ng-show="showList" ng-class="{ 'fade-animation': animate }">
+      <h2>List View</h2>
+      <ul>
+        <li ng-repeat="item in items">{{ item }}</li>
+      </ul>
+    </div>
+    <div ng-switch-when="grid" class="grid-view" ng-hide="showList" ng-show="showGrid" ng-class="{ 'fade-animation': animate }" ng-repeat="item in items">
+      {{item}}
+    </div>
+  </div>
+  <button ng-click="toggleView()">Toggle View</button>
+  <br>
+  
+  <script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope) {
+      $scope.items = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];
+      $scope.showList = true;
+      $scope.showGrid = false;
+      $scope.toggleView = function() {
+        $scope.showList = !$scope.showList;
+        $scope.showGrid = !$scope.showGrid;
+      };
+    });
+  </script>
+</body>
+</html>

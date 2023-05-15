@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>AngularJS Text Editor</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+	<script>
+		var app = angular.module("textEditorApp", []);
+		app.controller("textEditorCtrl", function($scope) {
+			$scope.text = ""; // initialize the text to be edited
+			$scope.filename = ""; // initialize the filename of the text
+
+			// function to handle pasting from the clipboard
+			$scope.handlePaste = function(event) {
+				event.preventDefault(); // prevent default paste behavior
+				var text = event.clipboardData.getData("text/plain"); // get the text from clipboard
+				document.execCommand("insertText", false, text); // insert the text at the current cursor position
+			};
+
+			// function to handle cutting selected text to the clipboard
+			$scope.handleCut = function() {
+				document.execCommand("cut"); // cut the selected text to the clipboard
+				$scope.saveData(); // save the updated text and filename to localStorage
+			};
+
+			// function to handle copying selected text to the clipboard
+			$scope.handleCopy = function() {
+				document.execCommand("copy"); // copy the selected text to the clipboard
+			};
+
+			// function to handle pasting text from the clipboard
+			$scope.handlePaste = function() {
+				document.execCommand("paste"); // paste text from the clipboard at the current cursor position
+				$scope.saveData(); // save the updated text and filename to localStorage
+			};
+
+			// function to save the text and filename to localStorage
+			$scope.saveData = function() {
+				localStorage.setItem("text", $scope.text);
+				localStorage.setItem("filename", $scope.filename);
+			};
+
+			// function to load the text and filename from localStorage
+			$scope.loadData = function() {
+				$scope.text = localStorage.getItem("text") || "";
+				$scope.filename = localStorage.getItem("filename") || "";
+			};
+
+			// load the saved data when the page loads
+			$scope.loadData();
+
+			// function to clear the saved data from localStorage
+			$scope.clearData = function() {
+				localStorage.removeItem("text");
+				localStorage.removeItem("filename");
+				$scope.text = "";
+				$scope.filename = "";
+			};
+
+			// function to format and download the text file
+			$scope.downloadFile = function() {
+				var data = new Blob([$scope.text], { type: "text/plain;charset=utf-8" });
+				var downloadLink = document.createElement("a");
+				downloadLink.href = window.URL.createObjectURL(data);
+				downloadLink.download = $scope.filename + ".txt";
+				document.body.appendChild(downloadLink);
+				downloadLink.click();
+				document.body.removeChild(downloadLink);
+			};
+		});
+	</script>
+</head>
+<body ng-app="textEditorApp">
+	<div ng-controller="textEditorCtrl">
+		<input type="text" ng-model="filename" placeholder="Filename">
+		<br>
+		<textarea ng-model="text" ng-paste="handlePaste()" ng-change="saveData()"></textarea>
+		<br>
+		<button ng-click="handleCut()">Cut</button>
+		<button ng-click="handleCopy()">Copy</button>
+		<button ng-click="handlePaste()">Paste</button>
+		<button ng-click="saveData()">Save</button>
+		<button ng-click="loadData()">Load</button>
+		<button ng-click="downloadFile()">Download file</button>
+	</div>
+</body>
+</html>

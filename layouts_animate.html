@@ -1,0 +1,79 @@
+<head>
+    <title>TravelBuddy</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.js"></script>
+    <script>
+        var myApp = angular.module('myApp', ['ngAnimate']);
+        myApp.controller("MyController", function ($scope,$animate) {
+            $scope.view = 'grid';
+            $scope.items = [
+                { source:"hyderabad", destination:"chennai",date:"12-02-2022"},
+                { source:"chennai", destination:"delhi",date:"18-03-2022"},
+                { source:"delhi", destination:"hyderabad",date:"18-2-2022"},
+                { source:"bangalore", destination:"chennai",date:"8-23-2022"},
+                { source:"hyderabad", destination:"bangalore",date:"18-23-2022"},
+                { source:"mumbai", destination:"chennai",date:"18-23-2022"},
+                { source:"hyderabad", destination:"mumbai",date:"18-23-2022"}];
+
+            $scope.toggleView = function() {
+                $scope.view = $scope.view === 'list' ? 'grid' : 'list';
+            };
+        });
+    </script>
+    <style>
+        .animate.ng-enter, .animate.ng-leave {
+            transition: all 5s linear;
+        }
+        
+        .animate.ng-enter {
+            opacity: 0;
+        }
+        
+        .animate.ng-enter-active {
+            opacity: 1;
+        }
+        
+        .animate.ng-leave {
+            opacity: 1;
+        }
+        
+        .animate.ng-leave-active {
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body ng-app="myApp">
+        <div class="menu">
+            <table cellpadding="10px" cellspacing="10px">
+                <tr>
+                    <th colspan="2">
+                        <h1>Available Rides</h1><br></th>
+                    <th ><h2>Create new ride</h2></th>
+                </tr>
+            </table>
+            <!--  &#10145  -->
+            <div ng-controller="MyController" ng-animate="'animate'">
+                <button ng-click="toggleView()" class="buttons">{{ view === 'list' ? 'Grid View' : 'List View' }}</button>
+                <div ng-if="view === 'list'" style="padding-left: 15%;">
+                    <ul>
+                    <li ng-repeat="item in items">
+                        <div style="width:80%; border: 3px solid black; padding: 20px; margin-bottom: 10px;">
+                            {{item.source+'   &#10145   '+item.destination}}<br>
+                            {{item.date}}
+                        </div>
+                    </li>
+                    </ul>
+                </div>
+        
+                <div ng-if="view === 'grid'" style="overflow: auto; padding-left:80px;">
+                    <div ng-repeat="item in items" style="width: 25%; float:left; padding:20px; border: 2px solid black; margin: 20px;">
+                        {{item.source+'   &#10145   '+item.destination}}<br>
+                        {{item.date}}<br><br> 
+                    </div>
+                </div>
+            </div>
+                  
+        </div>
+        </body> 
+        </html>

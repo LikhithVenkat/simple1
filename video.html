@@ -1,0 +1,50 @@
+</body>
+</html>
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <title>TravelBuddy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <div class="homepage-container">
+      <div class= "toolbox" style="margin-bottom: 5%" ng-controller="videoCtrl" style="align-content: center;">
+        <video width="640" height="360" ng-src="{{videoSrc}}" controls></video>
+            <br><br>
+            <div class="content" style="padding-left: 37%;">
+            <button ng-click="skip(-20)" class="buttons">Rewind 20s</button>
+            <button ng-click="skip(20)" class="buttons">Fast Forward 20s</button>
+            <button ng-click="pauseVid()" class="buttons">Pause</button>
+            <button ng-click="playVid()" class="buttons">Play</button>
+            <button ng-click="restart()" class="buttons">Restart</button></div>
+            <script>
+                var app = angular.module("myApp", []);
+                app.controller("videoCtrl", function($scope) {
+                    $scope.videoSrc = "ssn.mp4"; 
+                    var video = document.querySelector('video');
+                    $scope.skip = function(seconds) {
+                        video.currentTime += seconds;
+                    };
+                    $scope.pauseVid = function() {
+                        video.pause();
+                    };
+                    $scope.playVid = function() {
+                        video.play();
+                    };
+                    $scope.restart = function() {
+                        video.currentTime = 0;
+                        video.play();
+                    };
+                });
+            </script>   
+      </div>
+
+      
+
+
+
+    </div>
+  </body>
+</html>

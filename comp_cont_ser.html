@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+	<title>AngularJS Example</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body>
+
+	<div ng-controller="myController">
+		<h1>{{ title }}</h1>
+		<my-component></my-component>
+	</div>
+
+	<script>
+		var app = angular.module("myApp", []);
+
+		// Service
+		app.service("myService", function() {
+			this.message = "Hello from myService!";
+		});
+
+		// Component
+		app.component("myComponent", {
+			template: "<p>{{ $ctrl.message }}</p>",
+			controller: function(myService) {
+				this.message = myService.message;
+			}
+		});
+
+		// Controller
+		app.controller("myController", function($scope, myService) {
+			$scope.title = "AngularJS Example";
+		});
+	</script>
+
+</body>
+</html>

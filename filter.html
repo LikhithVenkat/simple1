@@ -1,0 +1,38 @@
+<head>
+    <title>TravelBuddy</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  </head>
+  
+  <body ng-app="friends_list" ng-controller="myCtrl">
+    <div style="height: 75%">
+      <h1>Your Friends</h1>
+      <input type="text" id="name-input" ng-model="addMe" placeholder="Enter friend name" />
+      <button id="add-button" ng-click="addItem()">Add</button>
+      <p>{{errortext}}</p>
+      <ul>
+        <li ng-repeat="x in names| filter: addMe">
+            {{x}}<span ng-click="removeItem($index)">&#10060;</span>
+        </li>
+      </ul>
+      <script>
+        var app = angular.module("friends_list", []);
+        app.controller("myCtrl", function($scope) {
+        $scope.names = [];
+        $scope.addItem = function () {
+            $scope.errortext = "";
+            if (!$scope.addMe) {return;}
+            if ($scope.names.indexOf($scope.addMe) == -1) {
+            $scope.names.push($scope.addMe);
+            } else {
+            $scope.errortext = "The name is already in your friends list.";
+            }
+        }
+        $scope.removeItem = function (x) {
+            $scope.errortext = "";
+            $scope.names.splice(x, 1);
+        }
+        });
+      </script>
+    </div>
+  </body>
+  
